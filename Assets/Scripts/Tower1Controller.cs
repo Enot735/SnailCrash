@@ -19,7 +19,7 @@ public class Tower1Controller : MonoBehaviour
 
         ThingController thScript = newThing.transform.GetChild(0).gameObject.GetComponent<ThingController>();
         
-        thScript.AddForceToThing(newThing, TargetTransform, SpawnTransform, TargetTower2Transform);
+        thScript.InitTargetsTransform(newThing, TargetArr);
     }
 
     // Update is called once per frame
