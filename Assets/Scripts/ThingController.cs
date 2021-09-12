@@ -6,21 +6,31 @@ public class ThingController : MonoBehaviour
 {
     private float AngleInDegrees = 45f;
     private float Power = 50f;
+    private float V;
 
-    private Transform TargetTransform;
-    private Transform SpawnTransform;
-    private Transform TargetTower2Transform;
+    private Transform[] TargetArrIn = new Transform[4];
 
-    private Transform[] TargetArr = new Transform[4];
+    private GameObject newThingIn;
 
-    private GameObject newThing;
+    private bool isUsed_0 = false;
+    private bool isUsed_1 = false;
+    private bool isUsed_2 = false;
+    private bool isUsed_3 = false;
+
 
     //float g = Physics.gravity.y;
     float g = -20f;
 
-    private float CalculateSpeed(Transform TargetTransform)
+    public void InitTargetsTransform(GameObject newThing, Transform[]  TargetArr)
     {
-        Vector3 fromTo = TargetTransform.position - transform.position;
+        TargetArrIn = TargetArr;
+
+        newThingIn = newThing;
+    }
+
+    public float CalculateSpeed(Transform TargetTransform, Transform SpawnTransform)
+    {
+        Vector3 fromTo = TargetTransform.position - SpawnTransform.position;
         Vector3 fromToXZ = new Vector3(fromTo.x, 0f, fromTo.z);
 
         float x = fromToXZ.magnitude;
@@ -32,42 +42,13 @@ public class ThingController : MonoBehaviour
         return Mathf.Sqrt(Mathf.Abs(v2)) * Power;
     }
 
-    public void AddForceToThing(GameObject newThing_1, Transform TargetTransform_1, Transform SpawnTransform_1, Transform TargetTower2Transform_1)
+    public void AddForceToThing(GameObject newThing, float V, Transform SpawnTransform)
     {
-
-        TargetTransform = TargetTransform_1;
-        SpawnTransform = SpawnTransform_1;
-        TargetTower2Transform = TargetTower2Transform_1;
-        newThing = newThing_1;
-
-        float v = CalculateSpeed(TargetTransform);
-
-        Debug.Log("v = " + v);
 
         Rigidbody baseOfThing = newThing.transform.GetChild(0).GetComponent<Rigidbody>();
 
-        baseOfThing.AddForce(-SpawnTransform.right * v, ForceMode.Acceleration);
+        baseOfThing.AddForce(-SpawnTransform.right * V, ForceMode.Acceleration);
         
-    }
-
-    public void AddForceToThing(GameObject newThing_1, Transform[] TargetArr_1)
-    {
-
-        //TargetTransform = TargetTransform_1;
-        //SpawnTransform = SpawnTransform_1;
-        //TargetTower2Transform = TargetTower2Transform_1;
-        newThing = newThing_1;
-
-        TargetArr = TargetArr_1;
-
-        float v = CalculateSpeed(TargetArr[0]);
-
-        Debug.Log("v = " + v);
-
-        Rigidbody baseOfThing = newThing.transform.GetChild(0).GetComponent<Rigidbody>();
-
-        baseOfThing.AddForce(-SpawnTransform.right * v, ForceMode.Acceleration);
-
     }
 
     // Start is called before the first frame update
@@ -83,21 +64,27 @@ public class ThingController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.name == "BaseG" && (!isUsed_0 || !isUsed_1 || !isUsed_2 || !isUsed_3))
+            {
 
-        if (collision.gameObject.name == "BaseG")
-        {
-            float v = CalculateSpeed(TargetTower2Transform);
-            v -= 100;
-            Debug.Log("v_2 = " + v);
-            Rigidbody baseOfThing = newThing.transform.GetChild(0).GetComponent<Rigidbody>();
-            baseOfThing.AddForce(-SpawnTransform.right * v, ForceMode.Acceleration);
+            if (!isUsed_1)
+            {
+                Debug.Log("newThingIn.transform.position = " + newThingIn.transform.position);
+                Debug.Log("TargetArrIn[1] = " + TargetArrIn[0]);
+                V = CalculateSpeed(TargetArrIn[0], newThingIn.transform);
+                AddForceToThing(newThingIn, V, newThingIn.transform);
+                isUsed_1 = true;
+            }
+            else
+            {
+                AddForceToThing(newThingIn, V, newThingIn.transform);
+            }
 
         }
 
         if (collision.gameObject.name == "BaseT2")
         {
-            Destroy(newThing);
+            Destroy(newThingIn);
         }
     }
 }
