@@ -6,10 +6,17 @@ public class ThingController : MonoBehaviour
 {
     private float AngleInDegrees = 45f;
     private float Power = 50f;
+    private float V;
 
     private Transform[] TargetArrIn = new Transform[4];
 
     private GameObject newThingIn;
+
+    private bool isUsed_0 = false;
+    private bool isUsed_1 = false;
+    private bool isUsed_2 = false;
+    private bool isUsed_3 = false;
+
 
     //float g = Physics.gravity.y;
     float g = -20f;
@@ -17,14 +24,12 @@ public class ThingController : MonoBehaviour
     public void InitTargetsTransform(GameObject newThing, Transform[]  TargetArr)
     {
         TargetArrIn = TargetArr;
+
         newThingIn = newThing;
     }
 
-    private float CalculateSpeed(Transform TargetTransform, Transform SpawnTransform)
+    public float CalculateSpeed(Transform TargetTransform, Transform SpawnTransform)
     {
-        Debug.Log("transform.position = " + transform.position);
-
-        //Vector3 fromTo = TargetTransform.position - transform.position;
         Vector3 fromTo = TargetTransform.position - SpawnTransform.position;
         Vector3 fromToXZ = new Vector3(fromTo.x, 0f, fromTo.z);
 
@@ -37,16 +42,12 @@ public class ThingController : MonoBehaviour
         return Mathf.Sqrt(Mathf.Abs(v2)) * Power;
     }
 
-    public void AddForceToThing(GameObject newThing, Transform TargetTransform, Transform SpawnTransform)
+    public void AddForceToThing(GameObject newThing, float V, Transform SpawnTransform)
     {
-
-        float v = CalculateSpeed(TargetTransform, SpawnTransform);
-
-        Debug.Log("v = " + v);
 
         Rigidbody baseOfThing = newThing.transform.GetChild(0).GetComponent<Rigidbody>();
 
-        baseOfThing.AddForce(-SpawnTransform.right * v, ForceMode.Acceleration);
+        baseOfThing.AddForce(-SpawnTransform.right * V, ForceMode.Acceleration);
         
     }
 
@@ -63,40 +64,20 @@ public class ThingController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        bool isUsed_0 = false;
-        bool isUsed_1 = false;
-        bool isUsed_2 = false;
-        bool isUsed_3 = false;
-
         if (collision.gameObject.name == "BaseG" && (!isUsed_0 || !isUsed_1 || !isUsed_2 || !isUsed_3))
-        {
-
-            if (!isUsed_0)
             {
-                AddForceToThing(newThingIn, TargetArrIn[0], newThingIn.transform);
-                isUsed_0 = true;
-                return;
-            }
 
             if (!isUsed_1)
             {
-                AddForceToThing(newThingIn, TargetArrIn[1], newThingIn.transform);
+                Debug.Log("newThingIn.transform.position = " + newThingIn.transform.position);
+                Debug.Log("TargetArrIn[1] = " + TargetArrIn[0]);
+                V = CalculateSpeed(TargetArrIn[0], newThingIn.transform);
+                AddForceToThing(newThingIn, V, newThingIn.transform);
                 isUsed_1 = true;
-                return;
             }
-
-            if (!isUsed_2)
+            else
             {
-                AddForceToThing(newThingIn, TargetArrIn[2], newThingIn.transform);
-                isUsed_2 = true;
-                return;
-            }
-
-            if (!isUsed_3)
-            {
-                AddForceToThing(newThingIn, TargetArrIn[3], newThingIn.transform);
-                isUsed_3 = true;
-                return;
+                AddForceToThing(newThingIn, V, newThingIn.transform);
             }
 
         }
