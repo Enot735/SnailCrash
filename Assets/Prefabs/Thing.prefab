@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1530885886042016512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Thing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,11 +43,10 @@ GameObject:
   - component: {fileID: 3189210948087077685}
   - component: {fileID: 376889251255663675}
   - component: {fileID: 5363436567192630959}
-  - component: {fileID: 8098972931335134891}
   - component: {fileID: 790928188748118080}
-  - component: {fileID: 2928482200702470701}
   - component: {fileID: 5359306209436397843}
-  m_Layer: 0
+  - component: {fileID: 1354573663}
+  m_Layer: 8
   m_Name: BaseTh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +61,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2055541518714225900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.05, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1530885886042016512}
@@ -128,22 +127,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8098972931335134891
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055541518714225900}
-  serializedVersion: 2
-  m_Mass: 2
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!120 &790928188748118080
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -310,24 +293,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &2928482200702470701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055541518714225900}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7b6c8a0056a1354ca1601c25e84ac85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetTransform: {fileID: 0}
-  timeBeteenStep: 1
-  stepCount: 70
-  addedV: {x: -3, y: 7, z: 0}
-  addedF: {x: 100, y: 15, z: 0}
-  keyToActivate: 32
 --- !u!114 &5359306209436397843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,3 +305,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b9598d28d726a41b696d09d3e58f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1354573663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055541518714225900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11df5824dfdaa244095d63fb55a26a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyPath: {fileID: 0}
+  speed: 1
+  maxDistance: 0.1
