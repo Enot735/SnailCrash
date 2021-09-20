@@ -15,16 +15,16 @@ public class Tower1Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("SpawnTransform.position = " + SpawnTransform.position);
+        Instantiate(Thing, SpawnTransform.position, SpawnTransform.rotation);
 
-        GameObject newThing = Instantiate(Thing, SpawnTransform.position, SpawnTransform.rotation);
-
+        /*GameObject newThing = Instantiate(Thing, SpawnTransform.position, SpawnTransform.rotation);
+         
         ThingController thScript = newThing.transform.GetChild(0).gameObject.GetComponent<ThingController>();
 
         float V = thScript.CalculateSpeed(TargetTransform, SpawnTransform);
         thScript.AddForceToThing(newThing, V, SpawnTransform);
 
-        thScript.InitTargetsTransform(newThing, TargetArr);
+        thScript.InitTargetsTransform(newThing, TargetArr);*/
     }
 
     // Update is called once per frame
